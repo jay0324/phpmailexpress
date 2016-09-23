@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="include/Scripts/validate/validate.css" media="all">
+    <script type="text/javascript" src="include/Scripts/validate/validate.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        //驗證表單
+        $(".validateform").JFormValidator();
+    })
+    </script>
+    <style>
+        .form-group{margin:10px 0 20px 0;}
+        span{display:block;margin:2px 0;}
+    </style>
+</head>
+
+<body>
+    <form method="post" action="process_mail.php" class="validateform" enctype="multipart/form-data">
+        <input type="hidden" name="lang" value="en">
+        <input type="hidden" name="submit-refer-title" value="Company_field">
+        <input type="hidden" name="submit-refer-mail" value="Email_field">
+        <input type="hidden" name="submit-refer-tel" value="Mobile">
+        <input type="hidden" name="submit-attachment" value="Attached_file">
+
+        <div class="form-group">
+            <span><font color="red">*</font>Company_field</span>
+            <input type="text" name="Company_field" data-validate="required,text">
+        </div>
+        <div class="form-group">
+            <span><font color="red">*</font>Name_field</span>
+            <input type="text" name="Name_field" data-validate="required,text">
+        </div>
+        <div class="form-group">
+            <span><font color="red">*</font>Email_field</span>
+            <input type="text" name="Email_field" data-validate="required,email">
+        </div>
+        <div class="form-group">
+            <span><font color="red">*</font>Select_field</span>
+            <select name="Select_field">
+                <option value="value1">value1</option>
+                <option value="value2">value2</option>
+                <option value="value3">value3</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <span><font color="red">*</font>Attached_file</span>
+            <input type="file" name="Attached_file" />
+        </div>
+        <div class="form-group">
+            <span><font color="red">*</font>Inquiry Messages</span>
+            <textarea name="Inquiry_Messages" data-validate="required"></textarea>
+        </div>
+        <div class="form-group">
+            <span><font color="red">*</font>Verify Code (Please enter the text above)</span>
+            <input type="text" name="validate" data-validate="captcha" />
+            <img class="captcha" src="process_mail.php?v=captcha" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{sender_mail_name}</title>
+</head>
+
+<body>
+    <table style="margin:0 auto;border:1px solid #000;" width="600" border="0" cellspacing="0">
+        <tr>
+            <td><img src="{wwwroot}/files/mail_template/style1/images/mail_heading.jpg"></td>
+        </tr>
+        <tr>
+            <td>
+                <div style="min-height:500px;padding:10px;">
+                    <center>
+                        <table style="width:90%;border:1px solid #000;border-spacing: 0;border-collapse: collapse;margin:0 auto;">
+                            <tr>
+                                <th style="width:150px;background:#eee;text-align:left;border:1px solid #000;padding:5px;">Title</th>
+                                <td style="border:1px solid #000;padding:5px;">{Field_Name}</td>
+                            </tr>
+                            <tr>
+                                <th style="width:150px;background:#eee;text-align:left;border:1px solid #000;padding:5px;">Attached Files</th>
+                                <td style="border:1px solid #000;padding:5px;">{attachFile}</td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#e6e4e5">
+                <div style="padding:10px;color:#000;font-size:12px;">
+                    <div class="copyright-wrap">
+                        <div class="copyright">COMPANY NAME</div>
+                        <div class="add">
+                            <p>
+                                Tel: 00-00000000
+                                <br> Fax: 00-000000
+                                <br>E-mail: <a href="mailto:info@webmaster.com">info@webmaster.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="wrap">
+                        Designed by G.T. Internet Info. Co., Ltd. <a title="Taiwan Products" href="http://www.manufacture.com.tw/" target="_blank">Taiwan Products</a>, <a title="B2BChinaSources" href="http://www.b2bchinasources.com/" target="_blank">B2BChinaSources</a>, <a title="B2BManufactures" href="http://www.manufacturers.com.tw/" target="_blank">B2BManufactures</a></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
