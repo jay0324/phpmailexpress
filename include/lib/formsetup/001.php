@@ -18,13 +18,13 @@
 	$pm_adminMailTitle = $pm_sitename.' online-quote'; 	
 
 	//寄給管理者的信件範本
-	$pm_adminMailTmp = $CFG->dirroot."/files/mail_template/style1/index.html"; 
+	$pm_adminMailTmp = "/files/mail_template/style1";
 	
 	//寄給使用者的信件標題
 	$pm_userMailTitle = $pm_sitename.' online-quote';
 
 	//寄給使用者的信件範本
-	$pm_userMailTmp = $CFG->dirroot."/files/mail_template/style2/index.html"; 
+	$pm_userMailTmp = "/files/mail_template/style2"; 
 
 	//排除上傳格式
 	$pm_allowDocType = array('exe','dat','inc','php','js','html','xml','ade','adp','bas','bat',
