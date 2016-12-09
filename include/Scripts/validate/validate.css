@@ -4,6 +4,7 @@
 
 .validate-msg{
 	display:none;
+    cursor:default;
 }
 
 .validate-msg.validate-error{
@@ -18,6 +19,7 @@
     opacity:0.95;
     left:0;
     z-index:1;
+    min-width:200px;
 }
 
 .validate-msg.validate-error:before{

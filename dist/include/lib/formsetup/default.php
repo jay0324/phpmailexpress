@@ -3,7 +3,7 @@
 	$pm_activeMailer = true;		 					
 
 	//允許的網域
-	$pm_allowDomain = 'localhost:8080'; 				
+	$pm_allowDomain = array('localhost:8080');		
 
 	//網站網址
 	$pm_siteurl = "localhost:8080";  					

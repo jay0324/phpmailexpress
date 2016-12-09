@@ -72,7 +72,8 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 	$success = $pm_msg['success'];
 
 	//check server
-	if ($_SERVER['HTTP_HOST']=='www.'.$allowDomain || $_SERVER['HTTP_HOST']==$allowDomain){
+	if (in_array($_SERVER['HTTP_HOST'],$allowDomain)) {
+		
 	}else{
 		fnAlert($pm_msg['auth'],$_SERVER['HTTP_REFERER']);
 		die();

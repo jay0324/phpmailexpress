@@ -10,12 +10,12 @@ param:
 $(yourForm).JFormValidator({
 	checkType: 'input, textarea, select', //check field type
 	msg: {
-		required: 'field return msg ',
-		text: 'field return msg ',
-		number: 'field return msg ',
-		email: 'field return msg ',
-		choice_require: 'field return msg ',
-		captcha: validate code return msg
+		required: '* This field is require ',
+		text: '* Text only ',
+		number: '* Number only ',
+		email: '* Invalid email address ',
+		choice_require: '* You must select one ',
+		captcha: '* Invalid validate code '
 	}
 });
 
@@ -57,48 +57,29 @@ require,text,number,email
 				})
 			})
 
-			$("input[type='submit'], submit",myform).on('click',function(e){
+			$("input[type='submit'], submit",myform).on('click',function(){
 				var validateResult = [];
-				e.preventDefault();
-				$(myform).serialize();
-
 				$(checkType,myform).each(function(){
 					validateResult.push(fnCheckField($(this),msg,myform));
 				});
 
 				if ($.inArray(false,validateResult) == -1) {
-					$(myform).submit();
+					return true;
 				}else{
 					return false;
 				}
 
 			})
 
-			//remove attached
-	        $(document).on('click', ".removeAttached", function(){
-	          var remove_target = $(this).attr("toggle-id");
-	          var field_name = 'attached_'+remove_target;
-	          $("#"+remove_target).remove();
-	          $("input[name='submit-attachment']").val($("input[name='submit-attachment']").val().replace(','+field_name,''));
-	          return false;
-	        })
-
-	        //add more attached
-	        $(document).on('click', ".addAttached", function(){
-	          var d = new Date();
-	          var dom_id = d.getTime();
-	          var field_name = 'attached_'+dom_id;
-	          var dom = '<div id="'+dom_id+'"><span class="removeAttached" toggle-id="'+dom_id+'">X</span> <input type="file" name="'+field_name+'"></div>';
-	          $("#more_attached").append(dom);
-	          $("input[name='submit-attachment']").val($("input[name='submit-attachment']").val()+','+field_name);
-	          return false;
-	        })
+			$(".validate-msg").on('click',function(){
+				$(this).fadeOut('200');
+			})
 
         })
 
         //reflash captcha image
         $(".captcha").on('click',function(){
-			$(this).attr('src',$(this).attr('src'));
+			$(this).attr('src',$(this).attr('src')+'?');
 		})
 
         //check field
@@ -163,13 +144,11 @@ require,text,number,email
 									returnMsg += '<br>'; //break to new line
 								}else{
 									$.ajax({
-										url: $(myform).attr('action'),
+										url: $(".captcha", myform).attr('src'),
 										method: 'post',
-										data: {
-											v: 'fcaptcha',
-											g: val
-										},
+										data: {v: 'fcaptcha',g: val},
 										success: function (r) {
+											console.log(r);
 										    if (r != '1') {
 												is_validate.push(false);
 												returnMsg += createNotifyMsg(validate[i],msg);
@@ -183,25 +162,27 @@ require,text,number,email
 						}
 					}
 
+
 					if ($.inArray(false,is_validate) == 0) {
 						if (type=='checkbox' || type=='radio') {
-							$("input[value='"+name+"']",myform).next('.validate-msg').addClass('validate-error').html('<span>'+returnMsg+'</span>');
+							$("input[value='"+name+"']",myform).next('.validate-msg').addClass('validate-error').html('<span>'+returnMsg+'</span>').fadeIn(200);
 						}else{
 							$(obj).removeClass('validate-ok').addClass('validate-error');
-							$(obj).next('.validate-msg').addClass('validate-error').html('<span>'+returnMsg+'</span>');
+							$(obj).next('.validate-msg').addClass('validate-error').html('<span>'+returnMsg+'</span>').fadeIn(200);
 						}
 
 						return false;
 					}else{
 						if (type=='checkbox' || type=='radio') {
-							$("input[value='"+name+"']",myform).next('.validate-msg').removeClass('validate-error').text('');
+							$("input[value='"+name+"']",myform).next('.validate-msg').removeClass('validate-error').text('').fadeIn(200);
 						}else{
 							$(obj).removeClass('validate-error').addClass('validate-ok');
-							$(obj).next('.validate-msg').removeClass('validate-error').text('');
+							$(obj).next('.validate-msg').removeClass('validate-error').text('').fadeOut(200);
 						}
 
 						return true;
 					}
+
 		}
 
 		function createNotifyMsg(type,msg) {

@@ -41,8 +41,13 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 	$frm = $HTTP_POST_VARS; //表單送出的值
 	
 	$field_name = array();
-	foreach($_POST as $name => $content) {
-	   array_push($field_name, $name);
+	if (isset($_POST) && !empty($_POST)){
+		foreach($_POST as $name => $content) {
+		   array_push($field_name, $name);
+		}
+	}else{
+		echo $pm_msg['no_data'];
+		die();
 	}
 
 	$field_attachArry = (!empty($frm['submit-attachment']) && substr($frm['submit-attachment'],-1) != ',') ? $frm['submit-attachment'].',' : $frm['submit-attachment'];
@@ -61,7 +66,7 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 	$active_mail_send = $CFG->active_mail_send; //啟用寄信設定
 
 	/*無資料庫的參數*/
-	$db = false; //是否有資料庫
+	//$db = false; //是否有資料庫
 	//針對語系提供送出的前端訊息
 	$receiver = $pm_receiver;
 	$receiver_name = $pm_receiver_name;
@@ -83,9 +88,9 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 //自訂函式==================================================================================================================================	
 
 	//更新驗證碼
-	function fnRenewCaptcha(){
-		$_SESSION['captcha'] = fnGenerateCODE(4);
-	}
+	// function fnRenewCaptcha(){
+	// 	$_SESSION['captcha'] = fnGenerateCODE(4);
+	// }
 
 	//simple html template	
 	function useTmp($tmpPath, $replaceString){
@@ -111,96 +116,71 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 	}
 
 	//產生字串
-	function fnGenerateCODE($set_length){
-	    $alphabet = '1234567890'; //生成字串的字元
-	    $length = $set_length;
-	    $pass = array(); //remember to declare $pass as an array
-	    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-	    for ($i = 0; $i < $length; $i++) {
-	        $n = rand(0, $alphaLength);
-	        $pass[] = $alphabet[$n];
-	    }
-	    return implode($pass); //turn the array into a string
-	}
+	// function fnGenerateCODE($set_length){
+	//     $alphabet = '1234567890'; //生成字串的字元
+	//     $length = $set_length;
+	//     $pass = array(); //remember to declare $pass as an array
+	//     $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+	//     for ($i = 0; $i < $length; $i++) {
+	//         $n = rand(0, $alphaLength);
+	//         $pass[] = $alphabet[$n];
+	//     }
+	//     return implode($pass); //turn the array into a string
+	// }
 	
 //動作===============================================================================================================================================
-	switch($_REQUEST['v']) {
-		case 'fcaptcha':
-			if (isset($_REQUEST['g']) && $_REQUEST['g'] == $_SESSION['captcha']){
-				echo 1; //驗證成功
-			}else{
-				echo 0; //驗證失敗
-			}
-		break;
-		case 'captcha':
-			//重新抓取驗證碼
-			fnRenewCaptcha();
+	// switch($_REQUEST['v']) {
+	// 	case 'fcaptcha':
+	// 		if (isset($_REQUEST['g']) && $_REQUEST['g'] == $_SESSION['captcha']){
+	// 			echo 1; //驗證成功
+	// 		}else{
+	// 			echo 0; //驗證失敗
+	// 		}
+	// 	break;
+		// case 'captcha':
+		// 	//重新抓取驗證碼
+		// 	fnRenewCaptcha();
 
-			// Set the content-type
-			header('Content-Type: image/png');
+		// 	// Set the content-type
+		// 	header('Content-Type: image/png');
 
-			// Create the image
-			$im = imagecreatetruecolor(90, 35);
+		// 	// Create the image
+		// 	$im = imagecreatetruecolor(90, 35);
 
-			// Create some colors
-			$white = imagecolorallocate($im, 255, 255, 255);
-			$grey = imagecolorallocate($im, 128, 128, 128);
-			$black = imagecolorallocate($im, 0, 0, 0);
-			imagefilledrectangle($im, 0, 0, 90, 35, $white);
+		// 	// Create some colors
+		// 	$white = imagecolorallocate($im, 255, 255, 255);
+		// 	$grey = imagecolorallocate($im, 128, 128, 128);
+		// 	$black = imagecolorallocate($im, 0, 0, 0);
+		// 	imagefilledrectangle($im, 0, 0, 90, 35, $white);
 
-			// The text to draw
-			$text = $_SESSION['captcha'];
-			// Replace path by your own font path
-			$font = $CFG->dirroot.'/include/Scripts/validate/font.ttf';
+		// 	// The text to draw
+		// 	$text = $_SESSION['captcha'];
+		// 	// Replace path by your own font path
+		// 	$font = $CFG->dirroot.'/include/Scripts/validate/font.ttf';
 
-			// Add the text
-			imagettftext($im, 20, 0, 10, 30, $black, $font, $text);
+		// 	// Add the text
+		// 	imagettftext($im, 20, 0, 10, 30, $black, $font, $text);
 
-			// Using imagepng() results in clearer text compared with imagejpeg()
-			imagepng($im);
-			imagedestroy($im);
-		break;
-		default:
+		// 	// Using imagepng() results in clearer text compared with imagejpeg()
+		// 	imagepng($im);
+		// 	imagedestroy($im);
+		// break;
+		//default:
 			//var_dump($field_name);die();
 
 			//送出前先更新驗證碼,可以防止返回寄信
-			fnRenewCaptcha();
+			//fnRenewCaptcha();
 
 			//1. 信件內容引用信件範本
 				//取得收件人
-				// if ($db) {
-				// 	$receiver_sql = "SELECT * FROM contact_group WHERE verify = -1 AND lang = '$lang'";
-				// 	$receiver_query = db_query($receiver_sql);
-				// 	$receiver = array();
-				// 	$receiver_name = array();
-				// 	while ($receiver_list = mysql_fetch_array($receiver_query)){
-				// 		array_push($receiver, $receiver_list['email']);
-				// 		array_push($receiver_name, $receiver_list['name']);
-				// 		$target .= $receiver_list['id'].",";
-				// 		if ($receiver_list['sender'] == 1) {
-				// 			$main_name = $receiver_list['name'];
-				// 			$main_sender = $receiver_list['email'];
-				// 		}
-				// 	}
-				// }else{
-					$main_name = $CFG->sender_mail_name;
-					$main_sender = $CFG->sender_mail_address;
-				//}
+				$main_name = $CFG->sender_mail_name;
+				$main_sender = $CFG->sender_mail_address;
 
 				//取得範本及相關信件設定值
-				// if ($db) {
-				// 	$query = db_query("SELECT * FROM contact_setting WHERE lang = '$lang' AND id = 'setting'");
-				// 	$res = mysql_fetch_array($query);
-				// 	$manager_subject = $res['manager_subject'];
-				// 	$manager_template = $res['manager_template'];
-				// 	$customer_subject = $res['customer_subject'];
-				// 	$customer_template = $res['customer_template'];
-				// }else{
-					$manager_subject = $CFG->sender_mail_subject;
-					$manager_template = useTmp($CFG->sender_mail_template, $CFG);
-					$customer_subject = $CFG->receiver_mail_subject;
-					$customer_template = useTmp($CFG->receiver_mail_template, $CFG);
-				//}
+				$manager_subject = $CFG->sender_mail_subject;
+				$manager_template = useTmp($CFG->sender_mail_template, $CFG);
+				$customer_subject = $CFG->receiver_mail_subject;
+				$customer_template = useTmp($CFG->receiver_mail_template, $CFG);
 
 				//檢查附件
 				$upload_attach = '';
@@ -257,30 +237,8 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 				$msg2_mail->wwwroot = $CFG->wwwroot;
 				$msg_mail->tmpImgPath = $CFG->receiver_mail_template_image;
 				$mail2_content = useTmpContent($customer_template, $msg2_mail);
-
-			//2. 執行寄送信件前先記錄到資料庫,可以避免漏收信件
-			// if ($db) {
-			// 	$sql = "INSERT INTO contact (
-			// 						target,
-			// 						name,
-			// 						email,
-			// 						tel,
-			// 						content,
-			// 						attachment,
-			// 						date
-			// 						) VALUES (
-			// 						'".$target."'
-			// 						,'".$refer_title."'
-			// 						,'".$refer_mail."'
-			// 						,'".$refer_tel."'
-			// 						,'".$mail_content."'
-			// 						,'".$upload_attach."'
-			// 						,'".date('Y-m-d h:i:s')."'
-			// 						)";
-			// 	$qid = db_query($sql);
-			// }
 				
-			//3. 如果允許的話則寄信通知客戶
+			//2. 如果允許的話則寄信通知客戶
 				if ($active_mail_send) {
 					//用phpmailer來寄信 (寄給系統管理員)
 						$mail = new PHPMailer;
@@ -325,29 +283,14 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 						$error_msg2 = $mail2->ErrorInfo;
 
 						if ($deliveryState){
-							// if ($db) {
-							// 	header("location: contact_success.php?lang=".$lang);
-							// }else{
-								echo fnAlert($success,$successPage);
-							//}
+							echo fnAlert($success,$successPage);
 						}else{
-							// if ($db) {
-							// 	system_log($error_msg); //紀錄log
-							// 	system_log($error_msg2); //紀錄log
-							// 	header("location: contact_fail.php?lang=".$lang);
-							// }else{
-								echo fnAlert($fail1,$_SERVER['HTTP_REFERER']);
-							//}
+							echo fnAlert($fail1,$_SERVER['HTTP_REFERER']);
 						}
-				}else{
-					// if ($db) {
-					// 	system_log('信件寄信功能未啟用!'); //紀錄log
-					// 	header("location: contact_fail.php?lang=".$lang);
-					// }else{
-						echo fnAlert($fail2,$_SERVER['HTTP_REFERER']);
-					//}
-				}
-		break;
-	}
+	// 			}else{
+	// 				echo fnAlert($fail2,$_SERVER['HTTP_REFERER']);
+	// 			}
+	// 	break;
+	// }
 
 ?>

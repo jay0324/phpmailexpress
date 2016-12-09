@@ -42,12 +42,13 @@
 
 	//訊息
 	$pm_msg = array(
-		'fail1' -> 'Send mail unsuccessfully! please try it letter',
-		'fail2' -> 'Send mail function not enable!',
-		'fail3' -> 'Upload files not allowed!',
-		'success' -> 'Mail Send successfully!',
-		'auth' -> 'You DO NOT have permission to use this program!'
-	)
+		'fail1' => 'Send mail unsuccessfully! please try it letter',
+		'fail2' => 'Send mail function not enable!',
+		'fail3' => 'Upload files not allowed!',
+		'success' => 'Mail Send successfully!',
+		'auth' => 'You DO NOT have permission to use this program!',
+		'no_data' => 'You DO NOT provide correct data'
+	);
 
 
 ?>

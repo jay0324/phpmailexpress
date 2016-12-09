@@ -1,14 +1,15 @@
 .validate-wrap{
-	position:relative;
+    position:relative;
 }
 
 .validate-msg{
-	display:none;
+    display:none;
+    cursor:default;
 }
 
 .validate-msg.validate-error{
-	display:block;
-	color:#fff;
+    display:block;
+    color:#fff;
     background: #F02222;
     position: absolute;
     padding:5px;
@@ -18,14 +19,15 @@
     opacity:0.95;
     left:0;
     z-index:1;
+    min-width:200px;
 }
 
 .validate-msg.validate-error:before{
-	content:"";
-	display:block;
-	width:0;
-	height:0;
-	border-right: 5px solid transparent;
+    content:"";
+    display:block;
+    width:0;
+    height:0;
+    border-right: 5px solid transparent;
     border-left: 5px solid transparent;
     border-bottom: 6px solid #F02222;
     position: absolute;
@@ -35,11 +37,11 @@
 }
 
 .validate-msg.validate-error:after{
-	content:"";
-	display:block;
-	width:0;
-	height:0;
-	border-right: 5px solid transparent;
+    content:"";
+    display:block;
+    width:0;
+    height:0;
+    border-right: 5px solid transparent;
     border-left: 5px solid transparent;
     border-bottom: 6px solid #ffffff;
     position: absolute;
@@ -49,13 +51,13 @@
 }
 
 .validate-error{
-	border:1px solid #CC1B1B;
+    border:1px solid #CC1B1B;
 }
 
 .validate-ok{
-	border:1px solid #3F8C2C;
+    border:1px solid #3F8C2C;
 }
 
 .captcha{
-	cursor: pointer;
+    cursor: pointer;
 }
