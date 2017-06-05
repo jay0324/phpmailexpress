@@ -3,13 +3,13 @@
 	$pm_activeMailer = true;		 					
 
 	//允許的網域
-	$pm_allowDomain = array('allow_domain');		
+	$pm_allowDomain = array('ds.manufacture.com.tw');		
 
 	//網站網址
-	$pm_siteurl = "website_root_path";  					
+	$pm_siteurl = "ds.manufacture.com.tw/api/contact/";  					
 
 	//網站名稱
-	$pm_sitename = "Company Name";  						
+	$pm_sitename = "CompanyName";  						
 
 	//郵件寄件者信箱
 	$pm_sendermail = 'info@ds.manufacture.com.tw'; 				
@@ -31,16 +31,16 @@
 		'chm','cmd','com','cpl','crt','hlp','hta','inf','ins','isp','jse','lnk','wsh');
 
 	//附加檔案方式 (附加方式: attachment:附加在信上 server:附加在服務器上)
-	$pm_attachType = 'attachment';
+	$pm_attachType = 'server'; 
 	
 	//收信人信箱 (陣列對應順序請跟名稱一樣)
-	$pm_receiver = array('receiver_email');
+	$pm_receiver = array('jay0324@manufacture.com.tw');
 	
 	//收信人名稱
 	$pm_receiver_name = array($pm_sitename.' online-enquiries');
 	
 	//返回網址
-	$pm_returnPage = 'return_url';
+	$pm_returnPage = 'http://ds.manufacture.com.tw/api/contact/contact.html';
 
 	//訊息
 	$pm_msg = array(

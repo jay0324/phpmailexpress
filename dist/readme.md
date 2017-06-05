@@ -53,11 +53,12 @@ process_mail.php 	(伺服端信件處理程序)
     <input type="hidden" name="submit-refer-title" value="Company_field"> <!--表單中的公司或姓名欄位-->
     <input type="hidden" name="submit-refer-mail" value="Email_field"> <!--表單中的信箱欄位-->
     <input type="hidden" name="submit-attachment" value="Attached_file"> <!--表單中的附件欄位,一個以上用","隔開欄位名稱-->
-	
+	  <input type="hidden" name="required" value="Required_Field"> <!--表單中必填欄位,後端驗證機制，用","隔開欄位名稱-->
+
 	<!-- 自行設計欄位 -->
 
 	<input type="text" name="validate" data-validate="captcha" /> <!-- 驗證碼欄位 -->
-    <img class="captcha" src="process_mail.php?v=captcha" /> <!-- 驗證碼圖示 -->
+    <img class="captcha" src="include/Scripts/validate/code.php" /> <!-- 驗證碼圖示 -->
 
 </form>
 ```
@@ -90,3 +91,7 @@ process_mail.php 	(伺服端信件處理程序)
 ```
 
 最後一定要記得把files的資料夾在server上面的權限改成可以寫入，這樣才可以上傳檔案
+
+備註: 
+前端表單驗證是用另一個javascript的jquery驗證外掛，可以到該validator的github說明頁面取得設定方法
+https://github.com/jay0324/validator

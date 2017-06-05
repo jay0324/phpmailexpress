@@ -51,6 +51,17 @@ mb_internal_encoding('UTF-8');//設定為utf8編碼
 		die();
 	}
 
+
+	$field_required = (!empty($frm['required'])) ? (substr($frm['required'],-1) != ',') ? explode(',', $frm['required'].','):explode(',', $frm['required']):array();
+	if (count($field_required) > 0){
+		for ($i = 0; $i < count($field_required)-1;$i++){
+			if (empty($_POST[$field_required[$i]])){
+				echo $pm_msg['no_data'];
+				die();
+			}
+		}
+	}
+
 	$field_attachArry = (!empty($frm['submit-attachment']) && substr($frm['submit-attachment'],-1) != ',') ? $frm['submit-attachment'].',' : $frm['submit-attachment'];
 	$field_attached = explode(',',$field_attachArry); //欲處理的附件欄位名稱
 	$refer_title = (isset($frm[$frm['submit-refer-title']]))?$frm[$frm['submit-refer-title']]:$frm['submit-refer-title']; //資料庫用的名稱欄位

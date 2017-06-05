@@ -26,7 +26,7 @@ for checkbox, radio validation settion:
 <input name="any_name" value="your checkbox or radio group name" type="hidden" data-validate="choice_require">
 
 validation method:
-require,text,number,email 
+required,text,number,email 
 
 */
 (function($) {
